@@ -1,0 +1,9 @@
+services:
+  api:
+    build: ./backend/Dockerfile
+    ports: 
+      - "8080:8080"
+  database:
+    image: "mongo"
+    ports:
+      - "27017:27017"
