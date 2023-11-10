@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import jsonwebtoken from 'jsonwebtoken';
 
-const PRIVATE_KEY:string = process.env.PRIVATE_KEY || "";
-const user = {
+const JWT_SECRET:string = process.env.JWT_SECRET || "";
+const USER = {
   email: process.env.email,
   password: process.env.password
 }
@@ -13,10 +13,10 @@ export function validateToken(req: Request, res: Response, next:Function) {
   if(!token) return res.status(401).send('Access denied. No token provided.');
 
   try {
-    const payload = jsonwebtoken.verify(token, PRIVATE_KEY);
+    const payload = jsonwebtoken.verify(token, JWT_SECRET);
     const userIdFromToken = typeof payload !== 'string' && payload.user;
 
-    if(!user && !userIdFromToken) {
+    if(!USER && !userIdFromToken) {
       return res.send(401).json({ message: 'Invalid token' });
     }
 

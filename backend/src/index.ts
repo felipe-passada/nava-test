@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 
 import dotenv from 'dotenv';
 import routes from './routes/';
-import { corsOptions } from '../utils/cors';
+import { corsOptions } from './utils/cors';
 
 dotenv.config()
 const app:Application = express();

@@ -7,7 +7,7 @@ router.post('/login', (req: Request, res: Response) => {
   try {
     const token = AuthService.login(email, password);
 
-    return res.status(200).setHeader("Authorization", token).end();
+    return res.status(200).send({Authorization: token});
   } catch (error) {
     throw new Error(`Authorization error: ${error}`);
   }

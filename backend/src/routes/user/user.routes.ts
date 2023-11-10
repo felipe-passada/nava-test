@@ -10,8 +10,8 @@ import {
 
 const router = Router();
 
-router.use(validateToken)
-router.use('*', validateToken);
+// router.use(validateToken)
+// router.use('*', validateToken);
 
 router.post('/users', async (req: Request, res: Response) => {
   try {
@@ -22,7 +22,7 @@ router.post('/users', async (req: Request, res: Response) => {
   }
 })
 
-router.get('/users', async (req: Request, res: Response) => {
+router.get('/users', validateToken, async (req: Request, res: Response) => {
   try {
     const result = await findUsers();
     return res.status(200).send(result);
