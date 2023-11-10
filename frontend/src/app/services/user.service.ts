@@ -18,9 +18,9 @@ export class UserService {
     return this.httpClient.get(`${API_BASE_URL}/users/${id}`)
   }
 
-  // batchLoadUsers(): Observable<any> {
-  //   return this.httpClient.post('http://127.0.0.1:8080/users');
-  // }
+  batchLoadUsers(): Observable<any> {
+    return this.httpClient.post(`${API_BASE_URL}/users`, {});
+  }
 
   editUser(id: string, user: any): Observable<any> {
     return this.httpClient.put(`${API_BASE_URL}/users/${id}`, user);

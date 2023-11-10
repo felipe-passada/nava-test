@@ -23,19 +23,22 @@ export class UserComponent {
     if (!this.isAuthenticated) {
       this.router.navigate(['login'])
     }
-    this.loadusers();
+    this.fetchUsers();
 
   }
 
-  loadusers() {
-    setTimeout(() => {
-      this.userApi.fetchUsers().subscribe(res => this.users = res);
-    }, 2000)
+  fetchUsers() {
+    this.userApi.fetchUsers().subscribe(res => this.users = res);
+  }
+
+  loadUsers() {
+    this.userApi.batchLoadUsers().subscribe();
+    setTimeout(() => { this.fetchUsers() }, 2000)
   }
 
   deleteUser (id: string) {
     this.userApi.deleteUser(id).subscribe();
-    this.loadusers();
+    this.fetchUsers();
   }
 
 }
