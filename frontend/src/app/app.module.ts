@@ -9,7 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserComponent } from './user/user.component';
 import { LoginComponent } from './login/login.component';
-import { LoaderInterceptor } from './interceptors/loader.interceptor';
+import { HttpRequestInterceptor } from './interceptors/http.interceptor';
 import { UserEditComponent } from './user/user-edit/user-edit.component';
 
 @NgModule({
@@ -31,7 +31,7 @@ import { UserEditComponent } from './user/user-edit/user-edit.component';
     RouterLinkActive
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

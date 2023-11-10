@@ -6,3 +6,9 @@ export type User = {
 };
 
 export type UserList = Array<User>;
+
+export interface LocalUser {
+    token: string;
+    email: string;
+};
+

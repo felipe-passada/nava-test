@@ -4,6 +4,7 @@ import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/types/user.types';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-user-edit',
@@ -23,7 +24,9 @@ export class UserEditComponent {
     private userApi: UserService,
     private router: Router,
     public formBdlr: FormBuilder,
+    public stgServive: StorageService
   ) {}
+  isAuthenticated: boolean = false;
 
   userForm = this.formBdlr.group(({
     name: [''],
@@ -32,6 +35,11 @@ export class UserEditComponent {
   }));
 
   ngOnInit() {
+    this.isAuthenticated = this.stgServive.isLoggedIn();
+    if (!this.isAuthenticated) {
+      this.router.navigate(['login'])
+    }
+
     const id = this.route.snapshot.paramMap.get('id');
     if (id) this.fetchUserDetails(id);
   }

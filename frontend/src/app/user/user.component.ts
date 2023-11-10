@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { UserService } from '../services/user.service';
+import { StorageService } from '../services/storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-users',
@@ -8,14 +10,21 @@ import { UserService } from '../services/user.service';
 })
 export class UserComponent {
   users:any
-  isLoading:boolean = false;
+  isAuthenticated: boolean = false;
 
-  constructor(private userApi: UserService) {}
+  constructor(
+    private userApi: UserService,
+    private stgServive: StorageService,
+    private router: Router
+    ) {}
 
   ngOnInit() {
-    this.isLoading = true;
+    this.isAuthenticated = this.stgServive.isLoggedIn();
+    if (!this.isAuthenticated) {
+      this.router.navigate(['login'])
+    }
     this.loadusers();
-    this.isLoading = false;
+
   }
 
   loadusers() {
@@ -25,10 +34,8 @@ export class UserComponent {
   }
 
   deleteUser (id: string) {
-    console.log(`DELETING User: ${id}`);
     this.userApi.deleteUser(id).subscribe();
     this.loadusers();
-    this.isLoading = false;
   }
 
 }
