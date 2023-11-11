@@ -38,3 +38,10 @@ export interface IUser {
   },
   nat: "BR"
 };
+
+export interface IUserModel {
+  _id?: string,
+  name: string,
+  email: string,
+  location: string
+}

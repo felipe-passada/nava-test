@@ -1,21 +1,12 @@
 import { Router, Request, Response } from 'express';
 import { validateToken } from '../../middlewares/authValidation';
-import {
-  createUsers,
-  updateUser,
-  findUser,
-  findUsers,
-  deleteUser
-} from '../../controllers/user.controller';
+import UserController from '../../controllers/user.controller';
 
 const router = Router();
 
-// router.use(validateToken)
-// router.use('*', validateToken);
-
-router.post('/users', async (req: Request, res: Response) => {
+router.post('/users', validateToken, async (req: Request, res: Response) => {
   try {
-    const result = await createUsers();
+    const result = await UserController.createUsers();
     return res.status(201).send(result);
   } catch (error) {
     console.error("Error while creating users batch", error)
@@ -24,7 +15,7 @@ router.post('/users', async (req: Request, res: Response) => {
 
 router.get('/users', validateToken, async (req: Request, res: Response) => {
   try {
-    const result = await findUsers();
+    const result = await UserController.findUsers();
     return res.status(200).send(result);
   } catch (error) {
     console.error("Error while loading users", error)
@@ -32,10 +23,10 @@ router.get('/users', validateToken, async (req: Request, res: Response) => {
   }
 })
 
-router.get('/users/:id', async (req: Request, res: Response) => {
+router.get('/users/:id', validateToken, async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
-    const result = await findUser(id);
+    const result = await UserController.findUser(id);
 
     return res.status(200).send(result);
   } catch (error) {
@@ -44,18 +35,18 @@ router.get('/users/:id', async (req: Request, res: Response) => {
   }
 })
 
-router.put('/users/:id', async (req: Request, res: Response) => {
+router.put('/users/:id', validateToken, async (req: Request, res: Response) => {
   const id = req.params.id;
   const payload = req.body;
   console.log("[USER ROUTE]: ", payload)
-  const result = await updateUser(id, payload);
+  const result = await UserController.updateUser(id, payload);
 
   return res.status(200).send(result);
 })
 
-router.delete('/users/:id', async (req: Request, res: Response) => {
+router.delete('/users/:id', validateToken, async (req: Request, res: Response) => {
   const id = req.params.id;
-  const result = await deleteUser(id);
+  const result = await UserController.deleteUser(id);
 
   return res.status(200).send({ data: result, message: "user deleted" });
 })
