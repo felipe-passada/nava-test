@@ -16,6 +16,7 @@ app.use(bodyParser.json());
 app.use(routes);
 app.listen(port);
 
-mongoose.connect('mongodb://127.0.0.1:27017/local');
+const MONGO_URL:string = process.env.MONGO_URL || "mongodb://172.17.0.1:27017/local";
+mongoose.connect(MONGO_URL);
 
 console.log(`Server running at http://localhost:${port}`);

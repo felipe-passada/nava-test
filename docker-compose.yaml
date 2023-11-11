@@ -1,9 +1,27 @@
+version: "3.8"
+
 services:
   api:
-    build: ./backend/Dockerfile
-    ports: 
+    build: ./backend/
+    ports:
       - "8080:8080"
+    networks:
+      - shared-infra
+    env_file:
+      - ./backend/.env
   database:
     image: "mongo"
     ports:
       - "27017:27017"
+    networks:
+      - shared-infra
+  frontend:
+    build: ./frontend/
+    ports:
+      - "4200:4200"
+    networks:
+      - shared-infra
+
+networks:
+  shared-infra:
+    driver: bridge
